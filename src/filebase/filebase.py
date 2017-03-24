@@ -1,5 +1,5 @@
 import os
-import cPickle as pickle
+import pickle as pickle
 
 class Filebase(object):
 	path_default = "/tmp/filebase"
@@ -7,16 +7,16 @@ class Filebase(object):
 	def __init__(self, collection):
 		if not os.path.exists(self.path_default):
 			os.makedirs(self.path_default)
-		self.collection = self.path_default + collection
+		self.collection = self.path_default + "/" + collection
 
 	def set_path(path):
-		self.path_default = path
+		Filebase.path_default = path
 
 	# inseri arquivo no direfotio informado
 	# [parametros]
 	def create(self, index, value):
 		if self.created_path(self.collection) :
-			file = open(self.collection + "/" + index + ".bin", "w")
+			file = open(self.collection + "/" + index + ".bin", "wb")
 			pickle.dump(value, file)
 			file.close()
 			return True

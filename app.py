@@ -1,8 +1,11 @@
-from src.filebase.filebase import *
+from src import Filebase
+
+Filebase.set_path("/home/diego/Code/filebase/data")
 
 value = { "test" : "text test"  }
-pack = Fb_query("2017/03")
 
-pack.created("test" , value)
+pack = Filebase("2017/03")
 
-print pack.read("test")
+pack.create("test", value)
+
+print(pack.read("test"))
