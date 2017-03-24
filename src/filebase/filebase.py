@@ -1,13 +1,16 @@
 import os
 import cPickle as pickle
 
-class Fb_query(object):
-	path_default = "/var/www/html/dev/fbM2M/fb/"
+class Filebase(object):
+	path_default = "/tmp/filebase"
 
 	def __init__(self, collection):
 		if not os.path.exists(self.path_default):
 			os.makedirs(self.path_default)
 		self.collection = self.path_default + collection
+
+	def set_path(path):
+		self.path_default = path
 
 	# inseri arquivo no direfotio informado
 	# [parametros]
