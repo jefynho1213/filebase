@@ -1,5 +1,5 @@
 import os
-import pickle as pickle
+import cPickle as pickle
 
 class Filebase(object):
 	path_default = "/tmp/filebase"
