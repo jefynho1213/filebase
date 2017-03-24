@@ -14,7 +14,7 @@ class Filebase(object):
 
 	# inseri arquivo no direfotio informado
 	# [parametros]
-	def created(self, index, value):
+	def create(self, index, value):
 		if self.created_path(self.collection) :
 			file = open(self.collection + "/" + index + ".bin", "w")
 			pickle.dump(value, file)
