@@ -11,8 +11,8 @@ dataframe = pd.DataFrame({
     'c': pd.Series(range(10))
 })
 
-pack.create("test2", dataframe)
+pack.create("test7", dataframe)
 
-file_c = pack.read("test2")
+file_c = pack.read("test7")
 
 print(file_c)
