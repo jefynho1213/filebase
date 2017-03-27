@@ -1,5 +1,5 @@
 import os
-import cPickle as pickle
+import msgpack
 
 class Filebase(object):
 	path_default = "/tmp/filebase"
@@ -9,24 +9,24 @@ class Filebase(object):
 			os.makedirs(self.path_default)
 		self.collection = self.path_default + "/" + collection
 
-	def set_path(path):
-		Filebase.path_default = path
+	def set_path(self, path):
+		self.path_default = path
 
 	# inseri arquivo no direfotio informado
 	# [parametros]
 	def create(self, index, value):
 		if self.created_path(self.collection) :
+			serialized = msgpack.packb(value)
 			file = open(self.collection + "/" + index + ".bin", "wb")
-			pickle.dump(value, file)
+			file.write(serialized)
 			file.close()
 			return True
 
 	def read(self, index):
 		_file = self.collection + "/" + index + ".bin"
 		if os.path.isfile(_file):
-			file = open(_file)
-			unFile = pickle.load(file)
-			file.close()
+			file = open(_file).read()
+			unFile = msgpack.unpackb(file)
 			return unFile
 		else:
 			return False

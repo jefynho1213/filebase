@@ -1,6 +1,6 @@
 from src import Filebase
 
-Filebase.set_path("/home/diego/Code/filebase/data")
+#Filebase.set_path("/home/diego/Code/filebase/data")
 
 value = { "test" : "text test"  }
 
