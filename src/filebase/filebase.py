@@ -1,5 +1,6 @@
 import os
 import msgpack
+import pandas as pd
 
 class Filebase(object):
 	path_default = "/tmp/filebase"
@@ -12,42 +13,37 @@ class Filebase(object):
 	def set_path(self, path):
 		self.path_default = path
 
-	# inseri arquivo no direfotio informado
-	# [parametros]
 	def create(self, index, value):
 		if self.created_path(self.collection) :
 			_file = self.collection + "/" + index + ".bin"
 			if os.path.isfile(_file):
-				print "Error : index exist. Use update for modify file"
-				return False
+				raise Exception("Error: index exist. Use update for modify file")
 			else:
 				serialized = msgpack.packb(value)
-				file = open(_file, "wb")
-				file.write(serialized)
-				file.close()
-				return True
+				
+				with open(_file, "wb") as file:
+					file.write(serialized)
+		
+		return True
 
 	def read(self, index):
 		_file = self.collection + "/" + index + ".bin"
 		if os.path.isfile(_file):
-			file = open(_file).read()
-			unFile = msgpack.unpackb(file)
-			return unFile
-		else:
-			return False
+			with open(_file) as file:
+				unFile = msgpack.unpackb(file.read())
+				return unFile
+		return False
 
 	def update(self, index, value):
 		if self.created_path(self.collection) :
 			_file = self.collection + "/" + index + ".bin"
 			if not os.path.isfile(_file):
-				print "Error : index not exist. Use create for create file"
-				return False
+				raise Exception("Error: index not exist. Use create for create file")
 			else:
 				serialized = msgpack.packb(value)
-				file = open(_file, "wb")
-				file.write(serialized)
-				file.close()
-				return True
+				with open(_file, "wb") as file:
+					file.write(serialized)
+		return True
 
 	def created_path(self, path):
 		if os.path.exists(path):
