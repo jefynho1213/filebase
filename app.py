@@ -1,13 +1,18 @@
 from src import Filebase
+import pandas as pd
 
+pack = Filebase("/home/diego/Code/filebase/data")
 
-value = { "test" : "text test"  }
-
-pack = Filebase("/var/www/html/dev/filebase/data")
-
-pack.create("test", value)
 pack.set_collection("2013/03")
 
-file_c = pack.create("test", value)
+dataframe = pd.DataFrame({
+    'a': pd.Series(range(10)),
+    'b': pd.Series(range(10)),
+    'c': pd.Series(range(10))
+})
 
-print(pack.read("test"))
+pack.create("test2", dataframe)
+
+file_c = pack.read("test2")
+
+print(file_c)

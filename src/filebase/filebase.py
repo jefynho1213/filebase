@@ -21,7 +21,10 @@ class Filebase(object):
 			if os.path.isfile(_file):
 				raise Exception("Error: index exist. Use update for modify file")
 			else:
-				serialized = msgpack.packb(value)
+				if type(value) is pd.DataFrame:
+					serialized = msgpack.packb(value.to_dict(orient='list'))
+				else:
+					serialized = msgpack.packb(value)
 				
 				with open(_file, "wb") as file:
 					file.write(serialized)
@@ -31,7 +34,7 @@ class Filebase(object):
 	def read(self, index):
 		_file = self.collection + "/" + index + ".bin"
 		if os.path.isfile(_file):
-			with open(_file) as file:
+			with open(_file, "rb") as file:
 				unFile = msgpack.unpackb(file.read())
 				return unFile
 		return False
