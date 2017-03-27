@@ -4,13 +4,15 @@ import msgpack
 class Filebase(object):
 	path_default = "/tmp/filebase"
 
-	def __init__(self, collection):
+	def __init__(self, path):
+		self.path_default = path
+
+
+	def set_collection(self, collection):
 		if not os.path.exists(self.path_default):
 			os.makedirs(self.path_default)
 		self.collection = self.path_default + "/" + collection
 
-	def set_path(self, path):
-		self.path_default = path
 
 	# inseri arquivo no direfotio informado
 	# [parametros]
@@ -40,7 +42,7 @@ class Filebase(object):
 		if self.created_path(self.collection) :
 			_file = self.collection + "/" + index + ".bin"
 			if not os.path.isfile(_file):
-				print "Error : index not exist. Use create for create file"
+				print "Error : index not exist. Use create for create new file"
 				return False
 			else:
 				serialized = msgpack.packb(value)
