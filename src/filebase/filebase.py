@@ -5,13 +5,15 @@ import pandas as pd
 class Filebase(object):
 	path_default = "/tmp/filebase"
 
-	def __init__(self, collection):
+	def __init__(self, path):
+		self.path_default = path
+
+
+	def set_collection(self, collection):
 		if not os.path.exists(self.path_default):
 			os.makedirs(self.path_default)
 		self.collection = self.path_default + "/" + collection
 
-	def set_path(self, path):
-		self.path_default = path
 
 	def create(self, index, value):
 		if self.created_path(self.collection) :

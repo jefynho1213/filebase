@@ -1,11 +1,13 @@
 from src import Filebase
 
-#Filebase.set_path("/home/diego/Code/filebase/data")
 
 value = { "test" : "text test"  }
 
-pack = Filebase("2017/03")
+pack = Filebase("/var/www/html/dev/filebase/data")
 
 pack.create("test", value)
+pack.set_collection("2013/03")
+
+file_c = pack.create("test", value)
 
 print(pack.read("test"))
