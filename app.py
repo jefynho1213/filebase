@@ -6,6 +6,6 @@ value = { "test" : "text test"  }
 
 pack = Filebase("2017/03")
 
-pack.create("test", value)
+file_c = pack.update("test", value)
 
 print(pack.read("test"))

@@ -16,11 +16,16 @@ class Filebase(object):
 	# [parametros]
 	def create(self, index, value):
 		if self.created_path(self.collection) :
-			serialized = msgpack.packb(value)
-			file = open(self.collection + "/" + index + ".bin", "wb")
-			file.write(serialized)
-			file.close()
-			return True
+			_file = self.collection + "/" + index + ".bin"
+			if os.path.isfile(_file):
+				print "Error : index exist. Use update for modify file"
+				return False
+			else:
+				serialized = msgpack.packb(value)
+				file = open(_file, "wb")
+				file.write(serialized)
+				file.close()
+				return True
 
 	def read(self, index):
 		_file = self.collection + "/" + index + ".bin"
@@ -30,6 +35,19 @@ class Filebase(object):
 			return unFile
 		else:
 			return False
+
+	def update(self, index, value):
+		if self.created_path(self.collection) :
+			_file = self.collection + "/" + index + ".bin"
+			if not os.path.isfile(_file):
+				print "Error : index not exist. Use create for create file"
+				return False
+			else:
+				serialized = msgpack.packb(value)
+				file = open(_file, "wb")
+				file.write(serialized)
+				file.close()
+				return True
 
 	def created_path(self, path):
 		if os.path.exists(path):
