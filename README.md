@@ -6,10 +6,11 @@
 
 ``` python
 from src import Filebase
+import os
 import pandas as pd
 
 #set file base path
-pack = Filebase("/home/diego/Code/filebase/data")
+pack = Filebase(os.getcwd() + "/data")
 
 #set files collection path
 #use "/" for create sub paths
