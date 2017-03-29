@@ -1,8 +1,6 @@
 # filebase
 
-Filebase was thought to be a simple library to enable the storage of data without the necessity of database, its interaction with Pandas leaves it good for analytics.
-The storage is done through files with any type of data, but for the Pandas to it is necessary to write data in DataFrame format. The data is sererialized with the msgPack library, for the read and write be performed in a shorter time and achieved savings of 35% in storage.
-
+Filebase was thought to be a simple library to enable the storage of data without the necessity of database, its interaction with Pandas leaves it good for analytics. The storage is done through files with any data-type, but for the Pandas to it is necessary to write objects that extends the Pandas DataFrame class. The data is serialized using the msgPack library, so the read and write can be performed in a shorter time and achieved savings of 35% in storage size.
 
 ## Examples
 
