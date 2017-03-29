@@ -17,7 +17,7 @@ class Filebase(object):
 		if self.created_path(self.collection) :
 			_file = self.collection + "/" + index
 			if os.path.isfile(_file + ".fbd") or os.path.isfile(_file + ".pd.fbd"):
-				raise Exception("Error: index exist. Use update for modify file")
+				raise Exception("Error: index exist. Use update() for modify file")
 			else:
 				if type(value) is pd.DataFrame:
 					serialized = msgpack.packb(value.to_dict(orient='list'))
@@ -43,13 +43,18 @@ class Filebase(object):
 
 	def update(self, index, value):
 		if self.created_path(self.collection) :
-			_file = self.collection + "/" + index + ".bin"
-			if not os.path.isfile(_file):
-				raise Exception("Error: index not exist. Use create for create file")
+			_file = self.collection + "/" + index
+			if os.path.isfile(_file + ".fbd") or os.path.isfile(_file + ".pd.fbd"):
+				if type(value) is pd.DataFrame:
+					serialized = msgpack.packb(value.to_dict(orient='list'))
+					with open(_file + ".pd.fbd", "wb") as file:
+						file.write(serialized)
+				else:
+					serialized = msgpack.packb(value)
+					with open(_file + "fbd", "wb") as file:
+						file.write(serialized)
 			else:
-				serialized = msgpack.packb(value)
-				with open(_file, "wb") as file:
-					file.write(serialized)
+				raise Exception("Error: index not exist. Use create() for create file")
 		return True
 
 	def created_path(self, path):
