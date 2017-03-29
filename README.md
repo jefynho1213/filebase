@@ -72,7 +72,7 @@ print(pack.read("test"))
 ```
 [out]:
 ```shell
-> {'test': 'text test'}
+{'test': 'text test'}
 ```
 
 #### Update
@@ -98,5 +98,5 @@ print(pack.read("test"))
 ```
 [out]:
 ```shell
-> {'test': 'text test update'}
+{'test': 'text test update'}
 ```
