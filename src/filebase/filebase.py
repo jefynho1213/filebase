@@ -57,6 +57,39 @@ class Filebase(object):
 				raise Exception("Error: index not exist. Use create() for create file")
 		return True
 
+	def insert(self, index, value):
+		if self.created_path(self.collection):
+			_file = self.collection + "/" + index
+			if type(value) is pd.DataFrame:
+				if os.path.isfile(_file + ".pd.fbd"):
+					df_old = self.read(index)
+					df_new =  pd.concat([df_old, value])
+					self.update(index, df_new)
+				else:
+					raise Exception("Error: file is not format DataFrame")
+			else :
+				if os.path.isfile(_file + ".fbd"):
+					file_old = self.read(index)
+					file_new = file_old + value
+					self.update(index, file_new)
+				else:
+					raise Exception("Error: file is format DataFrame")
+
+	def schema(self, index):
+		_file = self.collection + "/" + index
+		if os.path.isfile(_file + ".pd.fbd"):
+			df = self.read(index)
+			_schmea = {
+				"columns" : df.columns,
+				"shape" : df.shape,
+				"types" : df.ftypes,
+				"memory" : df.memory_usage(),
+			}
+			return _schmea
+		else:
+			raise Exception("Error: file is not format DataFrame")
+
+
 	def created_path(self, path):
 		if os.path.exists(path):
 			return True
